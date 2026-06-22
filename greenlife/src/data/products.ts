@@ -1,0 +1,83 @@
+import type { Product, Category } from '../types';
+
+export const categories: Category[] = [
+  { id: 'naturais', name: 'Produtos Naturais', icon: '🌿', count: 15 },
+  { id: 'cosmeticos', name: 'Cosméticos', icon: '🧴', count: 12 },
+  { id: 'alimentacao', name: 'Alimentação Saudável', icon: '🥗', count: 18 },
+  { id: 'suplementos', name: 'Suplementos', icon: '💊', count: 10 },
+];
+
+export const products: Product[] = [
+  {
+    id: 1,
+    name: 'Óleo de Coco Orgânico',
+    category: 'naturais',
+    price: 29.90,
+    image: 'https://www.bioessencia.com.br/media/catalog/product/cache/1/thumbnail/600x800/9df78eab33525d08d6e5fb8d27136e95/b/i/bio_0020_oleo_de_coco_02.jpg',
+    description: 'Óleo de coco extra virgem, prensado a frio, 100% orgânico.',
+    badge: 'Orgânico',
+  },
+  {
+    id: 2,
+    name: 'Sabonete Artesanal de Lavanda',
+    category: 'cosmeticos',
+    price: 18.90,
+    image: 'https://i.pinimg.com/736x/01/68/46/0168469cf9477a52f42fe5100dd8c533.jpg',
+    description: 'Sabonete natural com óleos essenciais de lavanda e camomila.',
+    badge: 'Vegano',
+  },
+  {
+    id: 3,
+    name: 'Mix de Granola Premium',
+    category: 'alimentacao',
+    price: 24.90,
+    image: 'https://m.media-amazon.com/images/I/61udLhidygL._AC_UF350,350_QL80_.jpg',
+    description: 'Mix de granola com castanhas, frutas secas e mel orgânico.',
+    badge: 'Sem Glúten',
+  },
+  {
+    id: 4,
+    name: 'Vitamina C + Zinco',
+    category: 'suplementos',
+    price: 45.90,
+    image: 'https://www.vhita.com.br/cdn/shop/files/vitamina_c_vitamina_c_vhita_4_facilidade_de_consumo_1x_2110f910-7ef2-47d0-889a-2aab0f8bf02f.webp?v=1762552956&width=1200',
+    description: 'Suplemento alimentar com alta concentração de Vitamina C e Zinco.',
+    badge: 'Natural',
+  },
+  {
+    id: 5,
+    name: 'Manteiga de Karité',
+    category: 'cosmeticos',
+    price: 32.90,
+    image: 'https://images.tcdn.com.br/img/img_prod/1138454/manteiga_de_karite_pura_100g_43_1_bf46e19648ae4704ece2e521b99ee81a.jpg',
+    description: 'Manteiga de karité pura, hidratante e nutritiva para pele e cabelos.',
+    badge: 'Cruelty-Free',
+  },
+  {
+    id: 6,
+    name: 'Chá Verde Matcha',
+    category: 'alimentacao',
+    price: 39.90,
+    image: 'https://product-data.raiadrogasil.io/images/18249750.webp',
+    description: 'Pó de chá verde matcha de alta qualidade, rico em antioxidantes.',
+    badge: 'Premium',
+  },
+  {
+    id: 7,
+    name: 'Shampoo Sólido de Alecrim',
+    category: 'cosmeticos',
+    price: 22.90,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK8Se4Ovo_CXx1pXNR-Aw2O9f_HDN9nbjYDQ32KJVAwvOKyerjv0quREk&s=10',
+    description: 'Shampoo sólido natural com óleo de alecrim e argila verde.',
+    badge: 'Zero Plástico',
+  },
+  {
+    id: 8,
+    name: 'Whey Protein Isolado',
+    category: 'suplementos',
+    price: 89.90,
+    image: 'https://m.media-amazon.com/images/I/716xLoMAiOL.jpg',
+    description: 'Whey protein isolado de alta qualidade, 90% de proteína pura.',
+    badge: 'Livre de Lactose',
+  },
+];
