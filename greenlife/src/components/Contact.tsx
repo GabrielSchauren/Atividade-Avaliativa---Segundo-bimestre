@@ -3,15 +3,42 @@ import { Send } from 'lucide-react';
 import './Contact.css';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({ email: '', motivo: '' });
+  const [formData, setFormData] = useState({ email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.email && formData.motivo) {
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 3000);
-      setFormData({ email: '', motivo: '' });
+    setLoading(true);
+    
+    const form = e.currentTarget;
+    const formDataObj = new FormData(form);
+    
+    // Pega os valores do formulário
+    const data = {
+      email: formDataObj.get('email') as string,
+      message: formDataObj.get('message') as string,
+      'form-name': 'contact',
+    };
+    
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString(),
+      });
+      
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ email: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        console.error('Erro no envio:', response.status);
+      }
+    } catch (err) {
+      console.error('Erro de conexão:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,12 +56,22 @@ const Contact: React.FC = () => {
         </div>
         
         <div className="contact-wrapper">
-          <form onSubmit={handleSubmit} className="contact-form">
+          <form 
+            name="contact" 
+            method="POST" 
+            data-netlify="true" 
+            netlify-honeypot="bot-field"
+            onSubmit={handleSubmit}
+            className="contact-form"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            
             <div className="form-group">
               <label htmlFor="email">Seu melhor e-mail</label>
               <input
                 type="email"
                 id="email"
+                name="email"
                 placeholder="seu@email.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -43,19 +80,20 @@ const Contact: React.FC = () => {
             </div>
             
             <div className="form-group">
-              <label htmlFor="motivo">Motivo do contato</label>
+              <label htmlFor="message">Motivo do contato</label>
               <textarea
-                id="motivo"
+                id="message"
+                name="message"
                 placeholder="Ex: Gostei muito do produto X, poderia me enviar um orçamento?"
-                value={formData.motivo}
-                onChange={(e) => setFormData({ ...formData, motivo: e.target.value })}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 required
                 rows={4}
               />
             </div>
             
-            <button type="submit" className="btn-primary">
-              Enviar <Send size={18} />
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? 'Enviando...' : 'Enviar'} <Send size={18} />
             </button>
             
             {submitted && (
