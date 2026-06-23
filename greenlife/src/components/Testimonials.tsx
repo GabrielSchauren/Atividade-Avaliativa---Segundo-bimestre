@@ -45,7 +45,7 @@ const Testimonials: React.FC = () => {
 
   const totalSlides = testimonials.length;
 
-  // Auto-play do carrossel
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
@@ -66,7 +66,6 @@ const Testimonials: React.FC = () => {
     setCurrentIndex(index);
   };
 
-  // Função para renderizar estrelas
   const renderStars = (count: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
@@ -116,7 +115,7 @@ const Testimonials: React.FC = () => {
           </button>
         </div>
 
-        {/* Indicadores (bolinhas) */}
+        
         <div className="carousel-dots">
           {Array.from({ length: totalSlides }).map((_, index) => (
             <button
