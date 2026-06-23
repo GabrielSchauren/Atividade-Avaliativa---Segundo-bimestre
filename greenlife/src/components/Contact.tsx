@@ -12,30 +12,27 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
-    const form = e.currentTarget;
-    const formDataObj = new FormData(form);
-    
-    // Pega os valores do formulário
-    const data = {
-      email: formDataObj.get('email') as string,
-      message: formDataObj.get('message') as string,
-      'form-name': 'contact',
-    };
-    
+
     try {
-      const response = await fetch('/', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString(),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          message: formData.message,
+        }),
       });
-      
+
+      const data = await response.json();
+
       if (response.ok) {
         setSubmitted(true);
         setFormData({ email: '', message: '' });
         setTimeout(() => setSubmitted(false), 5000);
       } else {
-        setError('Erro ao enviar. Tente novamente.');
+        setError(data.message || 'Falha ao enviar. Tente novamente.');
       }
     } catch (err) {
       setError('Erro de conexão. Tente novamente.');
@@ -63,16 +60,7 @@ const Contact: React.FC = () => {
         </div>
         
         <div className="contact-wrapper">
-          <form 
-            name="contact" 
-            method="POST" 
-            data-netlify="true" 
-            netlify-honeypot="bot-field"
-            onSubmit={handleSubmit}
-            className="contact-form"
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            
+          <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-group">
               <label htmlFor="email">Seu melhor e-mail</label>
               <input
@@ -105,7 +93,7 @@ const Contact: React.FC = () => {
             
             {submitted && (
               <div className="contact-success">
-                ✅ Mensagem enviada com sucesso!
+                ✅ E-mail enviado com sucesso!
               </div>
             )}
             {error && (

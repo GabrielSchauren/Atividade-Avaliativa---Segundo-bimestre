@@ -1,63 +1,68 @@
-import { Handler } from '@netlify/functions';
-import nodemailer from 'nodemailer';
-
+import { Handler } from "@netlify/functions";
+import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE === 'true',
+  secure: process.env.SMTP_SECURE === "true",
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
 });
 
-export const handler: Handler = async (event) => {
-  
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ message: 'Método não permitido' }),
-    };
-  }
-
-  
-  if (event.httpMethod === 'OPTIONS') {
+export const handler: Handler = async (event, context) => {
+  // Verificar CORS
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 204,
       headers: {
-        'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
       },
-      body: '',
+      body: "",
+    };
+  }
+
+  // Verificar método
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      headers: {
+        "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+      },
+      body: JSON.stringify({ message: "Método não permitido" }),
     };
   }
 
   try {
-    
-    const body = JSON.parse(event.body || '{}');
+    const body = JSON.parse(event.body || "{}");
     const { email, message } = body;
 
     if (!email || !message) {
       return {
         statusCode: 422,
-        body: JSON.stringify({ 
-          message: 'Campos "email" e "message" são obrigatórios' 
+        headers: {
+          "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+        },
+        body: JSON.stringify({
+          message: 'Campos "email" e "message" são obrigatórios',
         }),
       };
     }
 
-    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return {
         statusCode: 422,
-        body: JSON.stringify({ message: 'E-mail inválido' }),
+        headers: {
+          "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+        },
+        body: JSON.stringify({ message: "E-mail inválido" }),
       };
     }
 
-    
     const mailOptions = {
       from: `"GreenLife Site" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_EMAIL,
@@ -68,25 +73,20 @@ export const handler: Handler = async (event) => {
             <h1 style="color: #16a34a;">🌱 GreenLife</h1>
             <hr style="border: 1px solid #e2e8f0;" />
           </div>
-          
           <h2 style="color: #1a202c;">Novo contato recebido!</h2>
-          
           <div style="margin: 20px 0;">
             <p><strong>📧 Email do cliente:</strong></p>
             <p style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid #16a34a;">
               ${email}
             </p>
           </div>
-          
           <div style="margin: 20px 0;">
             <p><strong>💬 Mensagem:</strong></p>
             <p style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid #16a34a;">
               ${message}
             </p>
           </div>
-          
           <hr style="border: 1px solid #e2e8f0; margin: 20px 0;" />
-          
           <p style="color: #718096; font-size: 14px; text-align: center;">
             Esta mensagem foi enviada através do formulário de contato do site GreenLife.
           </p>
@@ -94,37 +94,33 @@ export const handler: Handler = async (event) => {
       `,
       text: `
         Novo contato do site GreenLife!
-        
         Email do cliente: ${email}
-        
-        Mensagem:
-        ${message}
-        
+        Mensagem: ${message}
         Esta mensagem foi enviada através do formulário de contato do site GreenLife.
       `,
     };
 
-    
     await transporter.sendMail(mailOptions);
 
-    
     return {
       statusCode: 200,
       headers: {
-        'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || '*',
+        "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
       },
-      body: JSON.stringify({ 
-        message: 'E-mail enviado com sucesso!' 
+      body: JSON.stringify({
+        message: "E-mail enviado com sucesso!",
       }),
     };
   } catch (error) {
-    
-    console.error('Erro ao enviar e-mail:', error);
-    
+    console.error("Erro ao enviar e-mail:", error);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ 
-        message: 'Falha ao enviar e-mail. Tente novamente mais tarde.' 
+      headers: {
+        "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+      },
+      body: JSON.stringify({
+        message: "Falha ao enviar e-mail. Tente novamente mais tarde.",
       }),
     };
   }
