@@ -1,4 +1,4 @@
-/* Seção de Contato */
+
 .contact {
   padding: 80px 0;
   background: white;
@@ -27,7 +27,7 @@
   line-height: 1.7;
 }
 
-/* Wrapper do formulário */
+
 .contact-wrapper {
   max-width: 600px;
   margin: 0 auto;
@@ -38,14 +38,14 @@
   border: 1px solid #e2e8f0;
 }
 
-/* Formulário */
+
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-/* Grupos de campos */
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -63,7 +63,7 @@
   color: #dc2626;
 }
 
-/* Campos de input */
+
 .form-group input,
 .form-group textarea {
   padding: 14px 16px;
@@ -93,7 +93,7 @@
   min-height: 120px;
 }
 
-/* Botão de envio */
+
 .contact-form .btn-primary {
   display: flex;
   align-items: center;
@@ -128,7 +128,7 @@
   transform: none;
 }
 
-/* Mensagem de sucesso */
+
 .contact-success {
   background: #f0fdf4;
   color: #16a34a;
@@ -140,7 +140,7 @@
   animation: fadeIn 0.3s ease;
 }
 
-/* Mensagem de erro */
+
 .contact-error {
   background: #fef2f2;
   color: #dc2626;
@@ -152,7 +152,7 @@
   animation: fadeIn 0.3s ease;
 }
 
-/* Animação */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -164,7 +164,7 @@
   }
 }
 
-/* Responsivo */
+
 @media (max-width: 640px) {
   .contact-wrapper {
     padding: 24px;

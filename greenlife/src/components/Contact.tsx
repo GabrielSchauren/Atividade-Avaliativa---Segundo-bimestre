@@ -16,7 +16,7 @@ const Contact: React.FC = () => {
     const form = e.currentTarget;
     const formDataObj = new FormData(form);
     
-    // Pega os valores do formulário
+    
     const data = {
       email: formDataObj.get('email') as string,
       message: formDataObj.get('message') as string,
