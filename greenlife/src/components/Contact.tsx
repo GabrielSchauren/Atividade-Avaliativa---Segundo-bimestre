@@ -6,10 +6,12 @@ const Contact: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     
     const form = e.currentTarget;
     const formDataObj = new FormData(form);
@@ -33,13 +35,18 @@ const Contact: React.FC = () => {
         setFormData({ email: '', message: '' });
         setTimeout(() => setSubmitted(false), 5000);
       } else {
-        console.error('Erro no envio:', response.status);
+        setError('Erro ao enviar. Tente novamente.');
       }
     } catch (err) {
-      console.error('Erro de conexão:', err);
+      setError('Erro de conexão. Tente novamente.');
+      console.error(err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -74,7 +81,7 @@ const Contact: React.FC = () => {
                 name="email"
                 placeholder="seu@email.com"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -86,7 +93,7 @@ const Contact: React.FC = () => {
                 name="message"
                 placeholder="Ex: Gostei muito do produto X, poderia me enviar um orçamento?"
                 value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                onChange={handleChange}
                 required
                 rows={4}
               />
@@ -99,6 +106,11 @@ const Contact: React.FC = () => {
             {submitted && (
               <div className="contact-success">
                 ✅ Mensagem enviada com sucesso!
+              </div>
+            )}
+            {error && (
+              <div className="contact-error" style={{ color: 'red', marginTop: '12px' }}>
+                ❌ {error}
               </div>
             )}
           </form>
