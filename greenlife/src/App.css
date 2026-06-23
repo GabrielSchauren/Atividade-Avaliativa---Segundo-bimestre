@@ -1,4 +1,4 @@
-
+/* Reset e estilos globais */
 * {
   margin: 0;
   padding: 0;
@@ -22,14 +22,14 @@ img {
   display: block;
 }
 
-
+/* Container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-
+/* Botões */
 .btn-primary {
   display: inline-block;
   background-color: #16a34a;
@@ -68,7 +68,7 @@ img {
   transform: translateY(-2px);
 }
 
-
+/* Cards */
 .card {
   background: white;
   border-radius: 12px;
@@ -82,7 +82,7 @@ img {
   transform: translateY(-4px);
 }
 
-
+/* Animações */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -109,7 +109,7 @@ img {
   }
 }
 
-
+/* Utilitários */
 .text-center {
   text-align: center;
 }

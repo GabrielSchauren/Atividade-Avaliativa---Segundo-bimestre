@@ -18,7 +18,7 @@ const Header: React.FC = () => {
           <a href="#solucoes">Soluções</a>
           <a href="#produtos">Produtos</a>
           <a href="#depoimentos">Depoimentos</a>
-          <a href="#precos">Planos</a>  {}
+          <a href="#precos">Planos</a>  {/* ← AQUI! Mudou de "Preços" para "Planos" */}
           <a href="#contato">Contato</a>
           <a href="#" className="nav-login">Login</a>
           <a href="#" className="nav-signup">Cadastre-se</a>
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
             <a href="#solucoes">Soluções</a>
             <a href="#produtos">Produtos</a>
             <a href="#depoimentos">Depoimentos</a>
-            <a href="#precos">Planos</a>  {}
+            <a href="#precos">Planos</a>  {/* ← AQUI TAMBÉM! */}
             <a href="#contato">Contato</a>
             <a href="#" className="nav-login">Login</a>
             <a href="#" className="nav-signup">Cadastre-se</a>

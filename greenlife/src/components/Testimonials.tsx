@@ -11,41 +11,41 @@ const Testimonials: React.FC = () => {
       role: 'Cliente GreenLife',
       text: 'Os produtos da GreenLife transformaram minha rotina! O óleo de coco é simplesmente maravilhoso para a pele.',
       stars: 5,
-      image: 'https:
+      image: 'https://i.pravatar.cc/150?img=1'
     },
     {
       name: 'Carlos Mendes',
       role: 'Cliente GreenLife',
       text: 'Comprei os suplementos e senti uma diferença enorme na minha disposição. Recomendo a todos!',
       stars: 5,
-      image: 'https:
+      image: 'https://i.pravatar.cc/150?img=2'
     },
     {
       name: 'Ana Paula Costa',
       role: 'Cliente GreenLife',
       text: 'A linha de cosméticos veganos é incrível! Minha pele nunca ficou tão saudável.',
       stars: 5,
-      image: 'https:
+      image: 'https://i.pravatar.cc/150?img=3'
     },
     {
       name: 'Roberto Almeida',
       role: 'Cliente GreenLife',
       text: 'Os produtos naturais da GreenLife têm uma qualidade incomparável. Já recomendei para toda a família!',
       stars: 5,
-      image: 'https:
+      image: 'https://i.pravatar.cc/150?img=4'
     },
     {
       name: 'Fernanda Lima',
       role: 'Cliente GreenLife',
       text: 'O shampoo sólido de alecrim é maravilhoso! Meu cabelo nunca esteve tão saudável e brilhante.',
       stars: 5,
-      image: 'https:
+      image: 'https://i.pravatar.cc/150?img=5'
     }
   ];
 
   const totalSlides = testimonials.length;
 
-  
+  // Auto-play do carrossel
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
@@ -66,7 +66,7 @@ const Testimonials: React.FC = () => {
     setCurrentIndex(index);
   };
 
-  
+  // Função para renderizar estrelas
   const renderStars = (count: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
@@ -116,7 +116,7 @@ const Testimonials: React.FC = () => {
           </button>
         </div>
 
-        {}
+        {/* Indicadores (bolinhas) */}
         <div className="carousel-dots">
           {Array.from({ length: totalSlides }).map((_, index) => (
             <button

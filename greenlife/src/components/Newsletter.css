@@ -74,7 +74,7 @@
   border-radius: 8px;
 }
 
-
+/* Desktop */
 @media (min-width: 640px) {
   .newsletter-form {
     flex-direction: row;

@@ -51,7 +51,7 @@
   color: #718096;
 }
 
-
+/* Desktop */
 @media (min-width: 768px) {
   .categories-grid {
     grid-template-columns: repeat(4, 1fr);

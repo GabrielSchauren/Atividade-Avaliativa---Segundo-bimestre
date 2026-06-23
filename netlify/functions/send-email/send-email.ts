@@ -1,7 +1,7 @@
 import { Handler } from '@netlify/functions';
 import nodemailer from 'nodemailer';
 
-
+// Configuração do transporte SMTP
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const handler: Handler = async (event) => {
- 
+  // 1. VERIFICAR MÉTODO
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -21,7 +21,7 @@ export const handler: Handler = async (event) => {
     };
   }
 
-  
+  // 2. VERIFICAR CORS (Preflight)
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
@@ -35,7 +35,7 @@ export const handler: Handler = async (event) => {
   }
 
   try {
-    
+    // 3. VALIDAR BODY
     const body = JSON.parse(event.body || '{}');
     const { email, message } = body;
 
@@ -48,7 +48,7 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    
+    // 4. VALIDAR EMAIL
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return {
@@ -57,7 +57,7 @@ export const handler: Handler = async (event) => {
       };
     }
 
-   
+    // 5. ENVIAR E-MAIL
     const mailOptions = {
       from: `"GreenLife Site" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_EMAIL,
@@ -104,10 +104,10 @@ export const handler: Handler = async (event) => {
       `,
     };
 
-    
+    // 6. ENVIAR
     await transporter.sendMail(mailOptions);
 
-    
+    // 7. RETORNAR SUCESSO
     return {
       statusCode: 200,
       headers: {
@@ -118,7 +118,7 @@ export const handler: Handler = async (event) => {
       }),
     };
   } catch (error) {
-    
+    // 8. TRATAR ERRO (sem expor detalhes)
     console.error('Erro ao enviar e-mail:', error);
     
     return {
